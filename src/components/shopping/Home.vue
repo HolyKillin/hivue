@@ -3,18 +3,18 @@
         <home-header></home-header>
         <div class="home-main">
             <transition-group enter-active-class="slideInRight" tag="div">
-                <ul class="goods animated" :key="animatedCurrentKey">
-                    <li v-for="item in goods" class="one-com" v-show="isCurrent(item.kind)">
-                        <one-commodity
-                                :id="item.id"
-                                :img="item.img"
-                                :title="item.title"
-                                :content="item.content"
-                                :price="item.price"
-                                :count="0"
-                        ></one-commodity>
-                    </li>
-                </ul>
+                    <ul class="goods animated" :key="animatedCurrentKey">
+                        <li v-for="item in goods" class="one-com" v-show="isCurrent(item.kind)">
+                            <one-commodity
+                                    :id="item.id"
+                                    :img="item.img"
+                                    :title="item.title"
+                                    :content="item.content"
+                                    :price="item.price"
+                                    :count="0"
+                            ></one-commodity>
+                        </li>
+                    </ul>
             </transition-group>
             <div :key="'0' + animatedCurrentKey">
                 <p class="no-more-goods">没有更多商品啦，敬请期待!!!</p>

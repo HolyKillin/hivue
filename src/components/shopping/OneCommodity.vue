@@ -19,6 +19,7 @@
 </template>
 
 <script>
+    import "../../assets/js/loading.js";
     export default {
         name: 'one-commodity',
         props: ['id','img', 'title', 'content', 'price', 'count'],
