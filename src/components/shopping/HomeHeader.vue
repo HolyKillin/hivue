@@ -1,6 +1,6 @@
 <template>
     <header class="home-header">
-        <div class="top-text">哼哼跑腿</div>
+        <h3 class="top-text">哼哼跑腿</h3>
         <div class="tap-wrap">
             <div class="tap-menu">
 
@@ -106,6 +106,7 @@
         background-color: #fff
         z-index: 999
         .top-text
+            letter-spacing 3px
             height: $HomeHeaderHeight - 30px
             line-height: $HomeHeaderHeight - 30px
         .tap-wrap

@@ -1,18 +1,19 @@
 <template>
     <div class="one-commodity">
         <div class="left" v-loading="loadingImg">
-            <img :src="img"/>
+            <img :src="img" @click="goToDetailsPage"/>
         </div>
         <div class="right">
             <div class="text">
-                <h3 class="title">{{title}}</h3>
+                <h3 class="title" @click="goToDetailsPage">{{title}}</h3>
                 <p class="content">{{content}}</p>
                 <span class="price">￥
                     <span class="price-number">{{price}}</span>
                 </span>
             </div>
             <div class="cart-btn">
-                <cube-button>+</cube-button>
+                <cube-button @click.stop.native="addGoodsToCart" v-show="counter === 0">+</cube-button>
+                <my-input-number :count="counter" v-show="counter > 0" @changeNumberEvent="getOperator"></my-input-number>
             </div>
         </div>
     </div>
@@ -20,6 +21,7 @@
 
 <script>
     import "../../assets/js/loading.js";
+    // import MyInputNumber from '../common/MyInputNumber/MyInputNumber';
     export default {
         name: 'one-commodity',
         props: ['id','img', 'title', 'content', 'price', 'count'],
@@ -37,6 +39,59 @@
                 }
             }
         },
+        computed: {
+            counter (){
+                let that = this;
+                let result = 0;
+                let cartGoods = this.$store.state.cartGoods;
+
+/*Array对象的 some()方法用于检测数组中的元素是否满足指定条件（函数提供）。
+some() 方法会依次执行数组的每个元素：
+    如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+    如果没有满足条件的元素，则返回false。
+注意： some() 不会对空数组进行检测。
+注意： some() 不会改变原始数组。*/
+
+                cartGoods.some(good => {
+                    if (good.id === that.id) {
+                        result = good.count;
+                    }
+                });
+                return result;
+            }
+        },
+        methods: {
+            addGoodsToCart () {
+                this.$store.commit('addGoodsToCart', this.oneCommodity);
+            },
+            getOperator (op) {
+                let id = this.oneCommodity.id;
+                if (op === 'plus') {
+                    this.$store.commit('addGoods', id);
+                } else {
+                    let count = this.$store.state.cartGoods.filter(val => {
+                        return val.id === id;
+                    })[0].count;
+                    if (count === 1) {
+                        this.$store.commit('deleteGoodsFromCart', id);
+                    } else {
+                        this.$store.commit('reduceGoods', id);
+                    }
+                }
+            },
+            goToDetailsPage () {
+                this.$router.push({
+                    path: '/DetailsPage',
+                    query: this.oneCommodity
+                });
+                //解决主页与详情页切换时，菜单栏无法更新获取当前路由的问题
+                this.$store.state.cartCounter++;
+                this.$store.state.cartCounter--;
+            },
+        },
+        // components:{
+        //     MyInputNumber: MyInputNumber
+        // },
         created () {
             let img = new Image();
             img.src = this.img;

@@ -17,6 +17,9 @@
   </div>
 </template>
 <style lang="stylus">
+    html,body{
+        height: 100%;
+    }
     h1{
         font-size: 2em;
         font-weight: bold;
@@ -35,9 +38,11 @@
       -moz-osx-font-smoothing grayscale
       text-align center
       color #2c3e50
+      width 100%
+      height 100%
 
     #nav
-      padding 30px
+      padding 20px
       a
         font-weight bold
         color #2c3e50

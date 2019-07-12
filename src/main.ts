@@ -8,9 +8,12 @@ import axios,{AxiosInstance } from 'axios';
 
 import './assets/css/vue2-animate.css';
 
+import './components/common/common.js'
+
+
 Vue.use(v => {
     v.prototype.$axios = axios
-})
+});
 declare module 'Vue/types/vue' {
     interface Vue {
         $axios: AxiosInstance

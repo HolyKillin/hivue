@@ -72,7 +72,7 @@
     }
     .home-main{
         width: 100%;
-        margin: 35px 0 61px;
+        margin: 61px 0;
         overflow-x: hidden;
     }
     .goods{
