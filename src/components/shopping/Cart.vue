@@ -1,26 +1,55 @@
 <template>
     <div class="cart">
         <header class="cart-header">
-            <h3>购物车</h3>
+            <h3>购物车<i class="cubeic-delete"></i></h3>
         </header>
         <main class="cart-body" v-if="cartGoods.length > 0">
+            <div class="wrap">
+                <ul class="goods-wrap">
+                    <li v-for="item in cartGoods" class="cartGoodsItem">
+<!--                        cart的商品选定数量加减，与home的有一定区别，如果cart的item直接使用OneCommodity.vue中的数据配置，-->
+<!--                        单个商品增减还没有问题，从第二个开始会出现cart的商品数增减没有改变的BUG，报错如下：-->
+<!--                          [Vue warn]: Error in v-on handler: "TypeError: Cannot read property 'count' of undefined"-->
 
+        <!--                        found in-->
+
+        <!--                        -&ndash;&gt; <MyInputNumber> at src/components/common/MyInputNumber/MyInputNumber.vue-->
+        <!--                        <OneCommodity> at src/components/shopping/OneCommodity.vue-->
+        <!--                            <Cart> at src/components/shopping/Cart.vue-->
+        <!--                                <Shop> at src/views/shopping-demo.vue-->
+        <!--                                    <App> at src/App.vue-->
+        <!--                                        <Root>-->
+<!--                        我想大概原因是OneCommodity.vue中 getOperator()方法里有一句
+                      let count = this.$store.state.cartGoods.filter(val => {
+                        return val.id === id;
+                    })[0].count; 把id搞乱了-->
+                        <one-cart-item
+                                :id="item.id"
+                                :img="item.img"
+                                :title="item.title"
+                                :content="item.content"
+                                :price="item.price"
+                                :count="item.count">
+                        </one-cart-item>
+                    </li>
+                </ul>
+            </div>
         </main>
-        <footer class="cart-footer">
+        <footer class="cart-footer" v-show="cartGoods.length > 0">
+            <div class="toPay">
+                <div class="text-left"><span>全选</span></div>
+                <div class="text-right">总计：￥ <span class="cart-amount">{{ amount }}</span><cube-button>结算</cube-button></div>
 
+            </div>
         </footer>
-        <div class="cart-empty">购物车里空空的~</div>
+        <div class="cart-empty" v-show="cartGoods.length === 0">购物车里空空的~</div>
     </div>
 </template>
 
 <script>
+    import OneCartItem from './OneCartItem.vue';
     export default {
         name: "cart",
-        data (){
-            return {
-                msg: 'this is cart page'
-            }
-        },
         computed:{
             cartGoods () {
                 return this.$store.state.cartGoods;
@@ -37,6 +66,9 @@
             //合计
 
         },
+        components:{
+            OneCartItem: OneCartItem
+        }
 
 
     }
@@ -60,10 +92,27 @@
               letter-spacing 3px
               height: $HomeHeaderHeight - 30px
               line-height: $HomeHeaderHeight - 30px
+              .cubeic-delete
+                    position fixed
+                    right 10px
+                    top 2px
+                    font-size 130%
     .cart-body
-        padding-top: $cartHeaderHeight;
+        /*padding-top: $cartHeaderHeight;*/
         padding-bottom: $NavHeight + $cartFooterHeight;
         background-color: #f5f5f5
+        .wrap
+            padding-top 10px
+            .price-wrap
+                margin-top 10px
+                background-color #fff
+                padding 15px 10px
+                text-align left
+                line-height 40px
+            >div
+                border-bottom 1px solid #eee
+            .red-packet .float-right
+                color $mainOrange
     .cart-footer
         position: fixed;
         width: 100%;
@@ -73,9 +122,26 @@
         border-top: 1px solid #eee
         left: 0;
         text-align: right;
+        .toPay
+            background white
+            .text-left
+                float left
+                padding-left 20px
+            .text-right
+                .cart-amount
+                    color: $mainOrange
+                    font-size: 18px
+                    font-weight: 600
+                .cube-btn
+                    width 30%
+                    float right
+                    background #f77b32
+                    letter-spacing 2px
+                    margin-left: 20px;
     .cart-empty
         position: absolute
         height: 50px
         width: 100%
         top: 50%
+        margin-top: -65px;
 </style>

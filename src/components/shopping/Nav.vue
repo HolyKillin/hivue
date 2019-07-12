@@ -2,17 +2,19 @@
     <nav class="shop-nav">
         <router-link to="/ShopHome">
             <div class="nav-item">
-                <div class="homeImg">Home</div>
+                <div class="homeImg"></div>
             </div>
         </router-link>
         <router-link to="/ShopCart">
             <div class="nav-item">
-                <div class="cartImg">Cart</div>
+                <div class="cartImg">
+                    <span class="cart-counter" v-show="cartCounter > 0">{{ cartCounter }}</span>
+                </div>
             </div>
         </router-link>
         <router-link to="/ShopMe">
             <div class="nav-item">
-                <div class="selfImg">My</div>
+                <div class="selfImg"></div>
             </div>
         </router-link>
     </nav>
@@ -20,7 +22,12 @@
 
 <script>
     export default {
-        name: 'shop'
+        name: 'shop',
+        computed:{
+            cartCounter(){
+                return this.$store.state.cartCounter
+            }
+        }
     }
 </script>
 
@@ -79,12 +86,12 @@
 
     .cart-counter{
         position: absolute;
-        width: 25px;
+        width: 20px;
         height: 20px;
         top: 5px;
         line-height: 20px;
-        border-radius: 40%;
-        background-color: $mainRed;
+        border-radius: 50%;
+        background-color: $mainOrange;
         color: #fff;
         font-size: 10px;
     }

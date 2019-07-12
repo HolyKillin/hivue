@@ -36,11 +36,12 @@
     }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+    @import "../../../assets/css/variable.styl";
     .cubeic-remove,
     .cubeic-add{
         font-size: 20px;
-        color: #ff65af;
+        color: $mainOrange;
     }
     .my-input-number{
         display: inline-block;

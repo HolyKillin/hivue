@@ -10,6 +10,7 @@ export default new Vuex.Store({
       GoodsCurrentSelKind: 0// 显示全部分类商品
   },
   mutations: {
+      //切换商品类别
       changeCurrentSelKind(state, kind){
           state.GoodsCurrentSelKind = kind;
       },

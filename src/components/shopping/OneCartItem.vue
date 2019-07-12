@@ -1,5 +1,5 @@
 <template>
-    <div class="one-commodity">
+    <div class="one-cart-item">
         <div class="left" v-loading="loadingImg">
             <img :src="img" @click="goToDetailsPage"/>
         </div>
@@ -12,8 +12,7 @@
                 </span>
             </div>
             <div class="cart-btn">
-                <cube-button @click.stop.native="addGoodsToCart" v-show="counter === 0">+</cube-button>
-                <my-input-number :count="counter" v-show="counter > 0" @changeNumberEvent="getOperator"></my-input-number>
+                <my-input-number :count="counter" @changeNumberEvent="getOperator"></my-input-number>
             </div>
         </div>
     </div>
@@ -27,15 +26,6 @@
         data (){
             return {
                 loadingImg: true,
-                oneCommodity: {
-                    id: this.id,
-                    img: this.img,
-                    title: this.title,
-                    content: this.content,
-                    price: this.price,
-                    count: this.count,
-                    isInCart: false,
-                }
             }
         },
         computed: {
@@ -44,12 +34,12 @@
                 let result = 0;
                 let cartGoods = this.$store.state.cartGoods;
 
-/*Array对象的 some()方法用于检测数组中的元素是否满足指定条件（函数提供）。
-some() 方法会依次执行数组的每个元素：
-    如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
-    如果没有满足条件的元素，则返回false。
-注意： some() 不会对空数组进行检测。
-注意： some() 不会改变原始数组。*/
+                /*Array对象的 some()方法用于检测数组中的元素是否满足指定条件（函数提供）。
+                some() 方法会依次执行数组的每个元素：
+                    如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。
+                    如果没有满足条件的元素，则返回false。
+                注意： some() 不会对空数组进行检测。
+                注意： some() 不会改变原始数组。*/
 
                 cartGoods.some(good => {
                     if (good.id === that.id) {
@@ -60,18 +50,12 @@ some() 方法会依次执行数组的每个元素：
             }
         },
         methods: {
-            addGoodsToCart () {
-                this.$store.commit('addGoodsToCart', this.oneCommodity);
-            },
             getOperator (op) {
-                let id = this.oneCommodity.id;
+                let id = this.id;
                 if (op === 'plus') {
                     this.$store.commit('addGoods', id);
                 } else {
-                    let count = this.$store.state.cartGoods.filter(val => {
-                        return val.id === id;
-                    })[0].count;
-                    if (count === 1) {
+                    if (this.counter === 1) {//数量为1 继续减时，将其从购物车删除，不然会继续减成负数
                         this.$store.commit('deleteGoodsFromCart', id);
                     } else {
                         this.$store.commit('reduceGoods', id);
@@ -101,7 +85,7 @@ some() 方法会依次执行数组的每个元素：
 
 <style lang="stylus" scoped>
     @import '../../assets/css/variable.styl';
-    .one-commodity
+    .one-cart-item
         height: $OneCommodityWrapHeight
         width: 100%
         font-size: 0
@@ -125,36 +109,31 @@ some() 方法会依次执行数组的每个元素：
                 line-height: 30px
                 top: 50%
                 transform: translateY(-50%)
-            .price
-                .price-number
-                    color: $mainOrange
-                    font-size: 18px
-                    font-weight: 600
+                .price
+                    .price-number
+                        color: $mainOrange
+                        font-size: 18px
+                        font-weight: 600
             .cart-btn
                 position: absolute
                 bottom: 5px
                 right: 10px
-                .cube-btn
-                    background-color: $mainOrange
-                    border-color: $mainOrange
-                    border-radius: 50%
-                    padding: 12px 16px;
-    .one-commodity>div
+    .one-cart-item>div
         font-size: $GobalFontSize
         display: inline-block
         vertical-align: middle
     @media screen and (min-width: 600px) {
-        .one-commodity{
+        .one-cart-item{
             height: $OneCommodityWrapHeight600;
         }
     }
     @media screen and (min-width: 800px) {
-        .one-commodity{
+        .one-cart-item{
             height: $OneCommodityWrapHeight800;
         }
     }
     @media screen and (min-width: 1025px) {
-        .one-commodity{
+        .one-cart-item{
             height: $OneCommodityWrapHeight1025;
         }
     }
