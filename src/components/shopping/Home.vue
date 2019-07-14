@@ -64,7 +64,7 @@
 
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
     .home{
         width: 100%;
         padding-bottom: $NavHeight + 5px;

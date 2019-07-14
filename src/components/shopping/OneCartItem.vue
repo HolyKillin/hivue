@@ -26,6 +26,15 @@
         data (){
             return {
                 loadingImg: true,
+                oneCommodity: {
+                    id: this.id,
+                    img: this.img,
+                    title: this.title,
+                    content: this.content,
+                    price: this.price,
+                    count: this.count,
+                    isInCart: false,
+                }
             }
         },
         computed: {

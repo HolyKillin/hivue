@@ -5,6 +5,7 @@ import Shop from './views/shopping-demo.vue';
 import ShopHome from './components/shopping/Home.vue';
 import ShopCart from './components/shopping/Cart.vue';
 import ShopMe from './components/shopping/Me.vue';
+import ShopDetails from './components/shopping/DetailsPage.vue'
 
 Vue.use(Router);
 
@@ -46,6 +47,10 @@ export default new Router({
                 path: '/ShopMe',
                 component: ShopMe,
             },
+            {
+              path: '/DetailsPage',
+              component: ShopDetails
+            }
         ],
 
     },
