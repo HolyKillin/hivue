@@ -49,6 +49,10 @@ export default new Vuex.Store({
               }
           })
       },
+      deleteAllFromCart(state:any, cartGoods:string){
+          state.cartCounter = 0;
+          state.cartGoods = [];
+      }
   },
   actions: {
 

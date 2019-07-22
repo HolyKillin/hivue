@@ -53,6 +53,9 @@ some() 方法会依次执行数组的每个元素：
 
                 cartGoods.some(good => {
                     if (good.id === that.id) {
+                        /*this指向的是调用此方法的对象，而箭头函数能很好的解决这个回调地狱，所以这句话其实可以直接用this，
+                        但是如果是用function()，在里面用this指向的就是这个function了，
+                        这样的话则务必先在前面赋值，保存this当前指向对象再做使用*/
                         result = good.count;
                     }
                 });

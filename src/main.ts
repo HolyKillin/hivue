@@ -19,7 +19,6 @@ declare module 'Vue/types/vue' {
         $axios: AxiosInstance
     }
 }
-
 Vue.config.productionTip = false;
 
 new Vue({

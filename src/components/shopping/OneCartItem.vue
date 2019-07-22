@@ -39,7 +39,6 @@
         },
         computed: {
             counter (){
-                let that = this;
                 let result = 0;
                 let cartGoods = this.$store.state.cartGoods;
 
@@ -51,7 +50,7 @@
                 注意： some() 不会改变原始数组。*/
 
                 cartGoods.some(good => {
-                    if (good.id === that.id) {
+                    if (good.id === this.id) {
                         result = good.count;
                     }
                 });

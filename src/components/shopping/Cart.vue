@@ -1,7 +1,7 @@
 <template>
     <div class="cart">
         <header class="cart-header">
-            <h3>购物车<i class="cubeic-delete"></i></h3>
+            <h3>购物车<i v-if="cartGoods.length > 0" class="cubeic-delete" @click="showDialog"></i></h3>
         </header>
         <main class="cart-body" v-if="cartGoods.length > 0">
             <div class="wrap">
@@ -62,9 +62,49 @@
                     result += good.price * good.count;
                 });
                 return result;
-            },
-            //合计
+            }
 
+        },
+        methods:{
+            showDialog() {
+                this.dialog = this.$createDialog({
+                    type: 'confirm',
+                    icon: 'cubeic-alert',
+                    title: '您真的要清空购物车嘛？',
+                    content: '可不能后悔哟~',
+                    confirmBtn: {
+                        text: '是的',
+                        active: true,
+                        disabled: false,
+                        href: 'javascript:;'
+                    },
+                    cancelBtn: {
+                        text: '不了',
+                        active: false,
+                        disabled: false,
+                        href: 'javascript:;'
+                    },
+                    onConfirm: () => {
+                        this.deleteAllFromCart();
+                        this.$createToast({
+                            type: 'warn',
+                            time: 1000,
+                            txt: '删除完成'
+                        }).show()
+                    },
+                    onCancel: () => {
+
+                    }
+                });
+                this.dialog.show()
+            },
+            deleteAllFromCart() {
+                let cartGoods = this.$store.state.cartGoods;
+                cartGoods.forEach(good =>{
+                    good.count = 0;
+                });
+                return this.$store.commit('deleteAllFromCart',cartGoods)
+            }
         },
         components:{
             OneCartItem: OneCartItem
@@ -85,7 +125,7 @@
         left 0
         text-align center
         width 100%
-        border-bottom 1px solid #eee
+        border-bottom 3px solid #ffad7e
         background-color #fff
         z-index 999
         h3
@@ -100,9 +140,8 @@
     .cart-body
         /*padding-top: $cartHeaderHeight;*/
         padding-bottom: $NavHeight + $cartFooterHeight;
-        background-color: #f5f5f5
+        background-color: #fff
         .wrap
-            padding-top 10px
             .price-wrap
                 margin-top 10px
                 background-color #fff
