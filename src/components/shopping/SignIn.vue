@@ -1,19 +1,25 @@
 <template>
   <div class="sign-in">
     <cube-input
+      v-model="uname.value"
+      :placeholder="uname.placeholder"
+      :type="uname.type"
+      :maxlength="uname.maxlength"
+      :readonly="uname.readonly"
+      :disabled="uname.disabled"
+      :clearable="uname.clearable"
     ></cube-input>
     <cube-input
-      v-model="value"
-      :placeholder="placeholder"
-      :type="type"
-      :maxlength="maxlength"
-      :readonly="readonly"
-      :disabled="disabled"
-      :autofocus="autofocus"
-      :autocomplete="autocomplete"
-      :eye="eye"
+      v-model="psd.value"
+      :placeholder="psd.placeholder"
+      :type="psd.type"
+      :maxlength="psd.maxlength"
+      :readonly="psd.readonly"
+      :disabled="psd.disabled"
+      :clearable="psd.clearable"
+      :eye="psd.eye"
     ></cube-input>
-    <cube-button>登 录</cube-button>
+    <cube-button @click="login">登 录</cube-button>
   </div>
 </template>
 
@@ -21,22 +27,33 @@
 export default {
   data() {
     return {
-      value: '',
-      placeholder: '请输入内容',
-      type: 'password',
-      readonly: false,
-      maxlength: 100,
-      disabled: false,
-      autofocus: true,
-      autocomplete: true,
-      eye: {
-        open: true,
-        reverse: false
-      }
+      uname:{
+        value: '王小明',
+        placeholder: '请输入用户名',
+        type: 'text',
+        readonly: false,
+        maxlength: 100,
+        disabled: false,
+        autofocus: true,
+        autocomplete: true,
+        clearable: true
+      },
+      psd:{
+        value: '123456',
+        placeholder: '请输入密码',
+        type: 'password',
+        maxlength: 100,
+        eye: {
+          open: false
+        },
+        clearable: true
+      },
     }
   },
   methods: {
-
+    login () {
+      this.$store.commit('login', this.uname.value);
+    },
   },
   components: {
 

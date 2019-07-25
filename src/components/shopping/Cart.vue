@@ -138,7 +138,7 @@
                     top 2px
                     font-size 130%
     .cart-body
-        /*padding-top: $cartHeaderHeight;*/
+        padding-top: $HeaderHeight;
         padding-bottom: $NavHeight + $cartFooterHeight;
         background-color: #fff
         .wrap

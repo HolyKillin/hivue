@@ -1,30 +1,31 @@
 <template>
     <div class="self">
         <header class="self-header">
-            <cube-tab-bar v-model="selectedLabel" show-slider>
+            <cube-tab-bar v-model="selectedLabel" v-if="isLogin === false" show-slider>
                 <cube-tab v-for="(item, index) in tabs" :label="item.label" :icon="item.icon" :key="item.label"></cube-tab>
             </cube-tab-bar>
+            <h3 class="self-user-header" v-else>我的</h3>
         </header>
         <main class="self-body">
-            <cube-tab-panels v-model="selectedLabel">
+            <cube-tab-panels v-model="selectedLabel" v-if="isLogin === false">
                 <cube-tab-panel v-for="(item, index) in tabs" :label="item.label" :key="item.label">
                     <sign-in v-if="item.label==='登录'"></sign-in>
                     <sign-up v-if="item.label==='注册'"></sign-up>
                 </cube-tab-panel>
             </cube-tab-panels>
+            <div class="self-user-main" v-else>
+                <div class="self-user-card">
+                    <img src="" alt="头像"/><span>{{ username }}</span>
+                    <cube-button :inline="true" @click="logout">退出登录</cube-button>
+                </div>
+                <div class="self-content-card">
+                    <cube-button :light="true" @click="toAddressManage">管理地址</cube-button>
+                </div>
+            </div>
         </main>
         <footer class="self-footer">
 
         </footer>
-        <!-- <cube-tab-panels v-model="selectedLabel">
-            <cube-tab-panel v-for="(item, index) in tabs" :label="item.label" :key="item.label">
-            <ul>
-                <li class="tab-panel-li" v-for="(hero, index) in item.heroes" :key="index">
-                {{hero}}
-                </li>
-            </ul>
-            </cube-tab-panel>
-        </cube-tab-panels> -->
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -37,14 +38,35 @@ import SignUp from './SignUp.vue'
         tabs: [{
           label: '登录',
           icon: 'cubeic-person',
-          heroes: ['敌法师', '卓尔游侠', '主宰', '米拉娜', '变体精灵']
         }, {
           label: '注册',
           icon: 'cubeic-star',
-          heroes: ['血魔', '影魔', '剃刀', '剧毒术士', '虚空假面', '幻影刺客', '冥界亚龙', '克林克兹', '育母蜘蛛', '编织者', '幽鬼', '司夜刺客', '米波']
         }]
       }
     },
+      /*    https://cn.vuejs.org/v2/guide/computed.html
+            computed和methods看似作用一样，其实有区别：
+                computed 会缓存，只有message发生改变时才会重新渲染，
+                methods 不会缓存，每一次触发它都会重新渲染*/
+    computed:{
+        username(){
+            return this.$store.state.username;
+        },
+        isLogin(){
+            return this.$store.state.isLogin;
+        },
+
+    },
+      methods:{
+          logout () {
+              this.$store.commit('logout');
+          },
+          toAddressManage(){
+              this.$router.push({
+                  path: '/AddressManage'
+              });
+          }
+      },
     components:{
         SignIn: SignIn,
         SignUp: SignUp
@@ -57,6 +79,7 @@ import SignUp from './SignUp.vue'
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
+    @import "../../assets/css/variable.styl";
     .self-header
         position: fixed
         left: 0
@@ -66,13 +89,23 @@ import SignUp from './SignUp.vue'
         z-index: 999
         .cube-tab-bar
             background-color: #fff
-    .cube-tab-panels
-        background-color: #fff
-    .tab-panel-li
-      padding: 0 16px
-      height: 40px
-      line-height: 40px
-      border-top: 1px solid #eee
-      &:last-child
-        border-bottom: 1px solid #eee
+            .cube-tab
+                height $HeaderHeight - 14
+        .self-user-header
+            height $HeaderHeight - 3
+            background-color: #fff
+            border-bottom: 3px solid #ffad7e
+            letter-spacing: 3px;
+            line-height: $HeaderHeight - 3
+    .self-body
+        padding-top $HeaderHeight
+        .cube-tab-panels
+            background-color: #fff
+        .tab-panel-li
+          padding: 0 16px
+          height: 40px
+          line-height: 40px
+          border-top: 1px solid #eee
+          &:last-child
+            border-bottom: 1px solid #eee
 </style>

@@ -16,3 +16,8 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 })
 export default class Home extends Vue {}
 </script>
+<style lang="stylus" scoped>
+  @import "../assets/css/variable.styl";
+  .home
+    padding-top $HeaderHeight
+</style>

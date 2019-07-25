@@ -65,14 +65,13 @@
 </script>
 
 <style lang="stylus" scoped>
+    @import "../../assets/css/variable.styl";
     .home{
         width: 100%;
-        padding-bottom: $NavHeight + 5px;
-        padding-top: $HomeHeaderHeight;
     }
     .home-main{
         width: 100%;
-        margin: 57px 0;
+        padding: $HeaderHeight*2 0 $NavHeight;
         overflow-x: hidden;
     }
     .goods{

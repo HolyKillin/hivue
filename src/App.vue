@@ -43,6 +43,9 @@
 
     #nav
       padding 20px
+      position: fixed;
+      background: #fff;
+      width: 100%;
       a
         font-weight bold
         color #2c3e50

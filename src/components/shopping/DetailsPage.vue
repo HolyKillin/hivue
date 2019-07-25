@@ -1,9 +1,7 @@
 <template>
 <div class="detail">
     <header class="detail-header">
-        <router-link to="/ShopHome">
-          <i class="cubeic-back"></i>
-        </router-link>
+          <i class="cubeic-back" @click="goBack"></i>
         <h3>详情</h3>
     </header>
     <main class="detail-body">
@@ -57,6 +55,9 @@
                 //解决主页与详情页切换时，菜单栏无法更新获取当前路由的问题
                 this.$store.state.cartCounter++;
                 this.$store.state.cartCounter--;
+            },
+            goBack(){
+                this.$router.go(-1);
             }
         }
     }
@@ -91,6 +92,7 @@
                     top 2px
                     font-size 130%
     .detail-body
+        padding-top $HeaderHeight
         .img-wrap
             border-bottom 1px solid #eee
             padding 10px
@@ -116,7 +118,7 @@
             position: absolute;
             left: 10px;
             top: 19px;
-            span 
+            span
                 color $mainOrange
         .go-to-cart
             background-image url(../../assets/icon/cart.png)

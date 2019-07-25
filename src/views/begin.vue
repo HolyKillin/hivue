@@ -54,7 +54,9 @@
     }
 </script>
 
-<style scoped>
+<style lang="stylus" scoped>
+    @import "../assets/css/variable.styl";
+    #begin{padding-top:$HeaderHeight;}
     .index-left-block .hr {
         margin-bottom: 20px;
     }
