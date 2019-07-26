@@ -52,15 +52,15 @@ export default new Router({
                 component: ShopMe,
                 children: [
                     {
-                        path: '/AddressManage',
+                        path: 'AddressManage',
                         component: AddressManage,
                         children: [
                             {
-                                path: '/AddAddress',
+                                path: 'AddAddress',
                                 component: AddAddress,
                             },
                             {
-                                path: '/EditAddress',
+                                path: 'EditAddress',
                                 component: EditAddress,
                             }
                         ]
