@@ -23,52 +23,53 @@
 
 <script>
 import { provinceList, cityList, areaList } from '../../assets/js/area'
-  const cityData = provinceList
-  cityData.forEach(province => {
-    province.children = cityList[province.value]
-    province.children.forEach(city => {
-      city.children = areaList[city.value]
+    const cityData = provinceList
+    cityData.forEach(province => {
+        province.children = cityList[province.value]
+        province.children.forEach(city => {
+            city.children = areaList[city.value]
+        })
     })
-  })
-const PCA = {
-  props: {
-    value: {
-      type: Array,
-      default() {
-        return []
-      }
+    const PCA = {
+        props: {
+            value: {
+                type: Array,
+                default() {
+                    return []
+                }
+            }
+        },
+        data() {
+            return {
+                selected: []
+            }
+        },
+        render(createElement) {
+            return createElement('cube-button', {
+                on: {
+                    click: this.showPicker
+
+                }
+            }, this.selected.length ? this.selected.join(' ') : 'placeholder')
+        },
+        mounted() {
+            this.picker = this.$createCascadePicker({
+                title: 'PCA Select',
+                data: cityData,
+                selectedIndex: this.value,
+                onSelect: this.selectHandler
+            })
+        },
+        methods: {
+            showPicker() {
+                this.picker.show()
+            },
+            selectHandler(selectedVal, selectedIndex, selectedTxt) {
+                this.selected = selectedTxt
+                this.$emit('input', selectedVal)
+            }
+        }
     }
-  },
-  data() {
-    return {
-      selected: []
-    }
-  },
-  render(createElement) {
-    return createElement('cube-button', {
-      on: {
-        click: this.showPicker
-      }
-    }, this.selected.length ? this.selected.join(' ') : 'placeholder')
-  },
-  mounted() {
-    this.picker = this.$createCascadePicker({
-      title: 'PCA Select',
-      data: cityData,
-      selectedIndex: this.value,
-      onSelect: this.selectHandler
-    })
-  },
-  methods: {
-    showPicker() {
-      this.picker.show()
-    },
-    selectHandler(selectedVal, selectedIndex, selectedTxt) {
-      this.selected = selectedTxt
-      this.$emit('input', selectedVal)
-    }
-  }
-}
 
     export default {
         data(){
@@ -112,13 +113,12 @@ const PCA = {
                         }
                     },
                     {
-                        type: 'select',
+                        component: PCA,
                         modelKey: 'city',
                         label: '城市',
                         rules: {
                             required: true
-                        }, 
-                        component: PCA,
+                        },
                         messages: {
                             required: '请选择城市'
                         }
@@ -131,8 +131,7 @@ const PCA = {
                             placeholder: '街道门牌号'
                         },
                         rules: {
-                            required: true,
-                            len: 5
+                            required: true
                         },
                         messages: {
                             required: '至少输入5个字'
@@ -141,32 +140,7 @@ const PCA = {
                 ]
             }
         },
-        mounted () {
-            this.addressPicker = this.$createCascadePicker({
-            title: 'City Picker',
-            data: addressData,
-            onSelect: this.selectHandle,
-            onCancel: this.cancelHandle
-            })
-        },
         methods: {
-            showAddressPicker() {
-            this.addressPicker.show()
-            },
-            selectHandle(selectedVal, selectedIndex, selectedText) {
-            this.$createDialog({
-                type: 'warn',
-                content: `Selected Item: <br/> - value: ${selectedVal.join(', ')} <br/> - index: ${selectedIndex.join(', ')} <br/> - text: ${selectedText.join(' ')}`,
-                icon: 'cubeic-alert'
-            }).show()
-            },
-            cancelHandle() {
-            this.$createToast({
-                type: 'correct',
-                txt: 'Picker canceled',
-                time: 1000
-            }).show()
-            },
             goBack() {
                 this.$router.go(-1)
             },

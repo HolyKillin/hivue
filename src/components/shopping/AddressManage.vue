@@ -7,11 +7,11 @@
             </header>
             <main class="address-page-content">
                 <ul class="all-address" v-if="allAddress.length > 0">
-                    <li class="one-address" v-for="item in allAddress">
+                    <li class="one-address" v-for="(item,index) in allAddress">
                         <div class="one-address-left">
                             王
                         </div>
-                        <div class="one-address-right"><a href="javascript:void(0);" @click.stop="EditAddress">| 编 辑</a></div>
+                        <div class="one-address-right"><a href="javascript:void(0);" @click.stop="toEditAddress(index)">| 编 辑</a></div>
                         <div class="one-address-center">
                             <span class="one-address-name">{{ item.name }}</span>
                             <span class="one-address-phone">{{ item.phone }}</span>
@@ -43,13 +43,16 @@
                 this.$router.go(-1)
             },
             toAddAddress(){
-                return this.$router.push({
+                this.$router.push({
                     path: '/ShopMe/AddressManage/AddAddress'
                 });
             },
-            toEditAddress(){
-                return this.$router.push({
-                    path: '/ShopMe/AddressManage/EditAddress'
+            toEditAddress(index){
+                this.$router.push({
+                    path: '/ShopMe/AddressManage/EditAddress',
+                    query:{
+                        index:index
+                    }
                 });
             }
         }

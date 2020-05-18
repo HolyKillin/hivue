@@ -2,21 +2,29 @@
     <div class="edit-address">
         <header class="edit-address-header">
             <i class="cubeic-back" @click="goBack"></i>
-            <h3>编辑收货地址</h3>
+            <h3>修改收货地址</h3>
         </header>
         <main class="edit-address-content">
-            <cube-form>
+            <cube-form :model="newAddForm" ref="newAddForm">
                 <cube-form-group>
-                    <cube-form-item :field="fields[0]"></cube-form-item>
-                    <cube-form-item :field="fields[1]"></cube-form-item>
-                    <cube-form-item :field="fields[2]"></cube-form-item>
-                    <cube-form-item :field="fields[3]"></cube-form-item>
+                    <cube-form-item :field="fields[0]">
+                        <cube-input v-model="newAddForm.name"></cube-input>
+                    </cube-form-item>
+                    <cube-form-item :field="fields[1]">
+                        <cube-input v-model="newAddForm.phone"></cube-input>
+                    </cube-form-item>
+                    <cube-form-item :field="fields[2]">
+                        <cube-input v-model="newAddForm.city"></cube-input>
+                    </cube-form-item>
+                    <cube-form-item :field="fields[3]">
+                        <cube-input v-model="newAddForm.detailedAddress"></cube-input>
+                    </cube-form-item>
                 </cube-form-group>
             </cube-form>
         </main>
         <footer class="edit-address-footer">
             <cube-button type="submit">保存</cube-button>
-            <cube-button>重置</cube-button>
+            <cube-button>删除</cube-button>
         </footer>
     </div>
 </template>
@@ -24,6 +32,15 @@
 <script>
     export default {
         data(){
+            let validatePhone = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('手机号不能为空'));
+                } else if (!/^1[3-9]{1}[0-9]{9}$/.test(value)) {
+                    return callback(new Error('手机号不正确'));
+                } else {
+                    callback();
+                }
+            };
             return{
                 validity: {},
                 valid: undefined,
@@ -89,7 +106,29 @@
                             required: '至少输入5个字'
                         }
                     }
-                ]
+                ],
+                // rules: {
+                //     name: [
+                //         { required: true, message: '请输入名字', trigger: 'blur' }
+                //     ],
+                //     phone: [
+                //         {required: true, validator: validatePhone, trigger: 'blur'}
+                //     ],
+                //     city: [
+                //         { required: true, message: '请输入所在城市', trigger: 'blur' }
+                //     ],
+                //     detailAddress: [
+                //         { required: true, message: '请输入详细地址', trigger: 'blur' }
+                //     ],
+                // }
+            }
+        },
+        computed: {
+            itemIndex () {
+                return this.$route.query.index;
+            },
+            newAddForm() {
+                return this.$store.state.address[this.itemIndex];
             }
         },
         methods:{
