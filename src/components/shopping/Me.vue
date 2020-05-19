@@ -16,7 +16,7 @@
                 </cube-tab-panels>
                 <div class="self-user-main" v-else>
                     <div class="self-user-card">
-                        <img src="" alt="头像"/><span>{{ username }}</span>
+                        <img src="#" alt="头像" class="avatar"/><span>{{ username }}</span>
                         <cube-button :inline="true" @click="logout">退出登录</cube-button>
                     </div>
                     <div class="self-content-card">
@@ -117,4 +117,19 @@ import SignUp from './SignUp.vue'
               border-top: 1px solid #eee
               &:last-child
                 border-bottom: 1px solid #eee
+            .self-user-main
+                .self-user-card
+                     padding 12px
+                     display flex
+                     align-items  center
+                     flex-direction column
+                     justify-content center
+                     .avatar
+                          width 100px
+                          height 100px
+                          border 1px solid
+                          border-radius 100%
+                     span
+                          margin 10px auto
+
 </style>

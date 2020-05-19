@@ -56,32 +56,26 @@
         height: $NavHeight * 0.75;
         margin-top: $NavHeight * 0.125;
     }
+    .router-link-active
+        .homeImg,.cartImg,.selfImg
+            background-position: 100% 100%;
     .homeImg{
-        background-image: url('../../assets/icon/home.png');
+        background-image: url('../../assets/icon/home-orange.png');
         background-repeat: no-repeat;
         background-position: 0 0;
         background-size: $NavHeight * 0.75 * 3  $NavHeight * 0.75;
-    }
-    .homeImgOn{
-        background-position: 100% 100%;
     }
     .cartImg{
-        background-image: url('../../assets/icon/cart.png');
+        background-image: url('../../assets/icon/cart-orange.png');
         background-repeat: no-repeat;
         background-position: 0 0;
         background-size: $NavHeight * 0.75 * 3  $NavHeight * 0.75;
-    }
-    .cartImgOn{
-        background-position: 100% 100%;
     }
     .selfImg{
-        background-image: url('../../assets/icon/profile.png');
+        background-image: url('../../assets/icon/profile-orange.png');
         background-repeat: no-repeat;
         background-position: 0 0;
         background-size: $NavHeight * 0.75 * 3  $NavHeight * 0.75;
-    }
-    .selfImgOn{
-        background-position: 100% 100%;
     }
 
     .cart-counter{
