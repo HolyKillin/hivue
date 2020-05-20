@@ -54,11 +54,19 @@
             OneCommodity: OneCommodity,
         },
         mounted (){
-                this.$axios.get('http://127.0.0.1:9090/data/goods.json').then(res => {
+            this.$axios.get('/hivue/dist/data/github-goods.json')
+                .then(res => {
+                    this.goods = [...res.data];
+                })
+                .catch(() =>{
+                    this.$axios.get('http://127.0.0.1:9090/data/goods.json')
+                        .then(res => {
                             this.goods = [...res.data];
-                        }).catch((error) => {
+                        })
+                        .catch((error) => {
                             console.log(error)
-                    })
+                        })
+                })
         }
     }
 
